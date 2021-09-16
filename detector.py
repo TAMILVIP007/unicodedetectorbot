@@ -307,8 +307,9 @@ async def triggered(c: Client, m: Message):
         if not admin.user.is_bot:
             ADMINS_TAG = (
                 ADMINS_TAG +
-                f"[{TAG}](tg://user?id={admin.user.id}) Unicode user detected !!"
+                f"[{TAG}](tg://user?id={admin.user.id})"
             )
+    ADMINS_TAG += "Unicode user detected !!"
     if what:
         await c.send_message(int(m.chat.id), ADMINS_TAG, reply_markup=keyboard)
     return await sleep(3)
