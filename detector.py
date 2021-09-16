@@ -1,23 +1,18 @@
 import re
-from time import time
 from logging import INFO, basicConfig, getLogger
+from time import time
 
-from config import *
-
-from redis import StrictRedis
-
-from pyrogram import Client, filters, __version__
-from pyrogram.errors import (
-    ChatAdminRequired,
-    RPCError,
-)
+from pyrogram import Client, __version__, filters
+from pyrogram.errors import ChatAdminRequired, RPCError
 from pyrogram.types import (
     CallbackQuery,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,
 )
+from redis import StrictRedis
 
+from config import *
 
 basicConfig(
     format="%(asctime)s - [DETECTOR] - %(levelname)s - %(message)s",
@@ -58,13 +53,17 @@ async def start(_, m: Message):
             )
         ],
     ])
-    return await m.reply_text("Hi there! i'm the one who removes all unicode user from ur chat if u give me a chance!\nCheck /help !",
-                              reply_markup=kb)
+    return await m.reply_text(
+        "Hi there! i'm the one who removes all unicode user from ur chat if u give me a chance!\nCheck /help !",
+        reply_markup=kb,
+    )
 
 
 @bot.on_message(filters.command("help") & ~filters.bot)
 async def help(_, m: Message):
-    return await m.reply_text("Just add me to your chat with ban user permission and toggle /detector on | off !")
+    return await m.reply_text(
+        "Just add me to your chat with ban user permission and toggle /detector on | off !"
+    )
 
 
 @bot.on_message(filters.command("ping") & ~filters.bot)
@@ -120,12 +119,9 @@ async def power(_, m: Message):
             )
     else:
         return await m.reply_text(
-            f"This group's current setting is: `{status}`\nTry with on and off to toggle!")
+            f"This group's current setting is: `{status}`\nTry with on and off to toggle!"
+        )
     return
-
-
-
-
 
 
 bot.run()
