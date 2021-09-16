@@ -1,0 +1,4 @@
+regex
+redis
+pyrogram
+tgcrypto
