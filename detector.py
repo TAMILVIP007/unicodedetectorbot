@@ -1,10 +1,9 @@
-from re import search
 from asyncio import sleep
 from logging import INFO, basicConfig, getLogger
+from re import search
 from time import time
 
 from emoji import UNICODE_EMOJI
-
 from pyrogram import Client, __version__, filters
 from pyrogram.errors import RPCError
 from pyrogram.types import (
@@ -14,7 +13,6 @@ from pyrogram.types import (
     InlineKeyboardMarkup,
     Message,
 )
-
 from redis import StrictRedis
 
 from config import *
@@ -71,8 +69,7 @@ async def help(_, m: Message):
         return
     return await m.reply_text(
         "Just add me to your chat with ban user permission and \
-        toggle /detector on | off !"
-    )
+        toggle /detector on | off !")
 
 
 @bot.on_message(filters.command("ping") & ~filters.bot)
@@ -284,34 +281,34 @@ async def triggered(c: Client, m: Message):
         [
             InlineKeyboardButton(
                 "Kick",
-                callback_data=
-                f"action_=kick={m.from_user.id}",
+                callback_data=f"action_=kick={m.from_user.id}",
             ),
             InlineKeyboardButton(
                 "Ban",
-                callback_data=
-                f"action_=ban={m.from_user.id}",
+                callback_data=f"action_=ban={m.from_user.id}",
             ),
         ],
         [
             InlineKeyboardButton(
                 "Mute",
-                callback_data=
-                f"action_=mute={m.from_user.id}",
+                callback_data=f"action_=mute={m.from_user.id}",
             ),
             InlineKeyboardButton(
                 "Solved !",
-                callback_data=
-                f"action_=oke={m.from_user.id}",
+                callback_data=f"action_=oke={m.from_user.id}",
             ),
         ],
     ])
-    admin_data = await bot.get_chat_members(int(m.chat.id), filter="administrators")
+    admin_data = await bot.get_chat_members(int(m.chat.id),
+                                            filter="administrators")
     ADMINS_TAG = str()
     TAG = "\u200b"
     for admin in admin_data:
         if not admin.user.is_bot:
-            ADMINS_TAG = ADMINS_TAG + f"[{TAG}](tg://user?id={admin.user.id}) Unicode user detected !!"
+            ADMINS_TAG = (
+                ADMINS_TAG +
+                f"[{TAG}](tg://user?id={admin.user.id}) Unicode user detected !!"
+            )
     if what:
         await c.send_message(int(m.chat.id), ADMINS_TAG, reply_markup=keyboard)
     return await sleep(3)
